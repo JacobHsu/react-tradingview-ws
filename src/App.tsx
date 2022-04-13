@@ -1,5 +1,6 @@
 import React from 'react';
 import { apiGet } from "./api";
+import Drawer from '@material-ui/core/Drawer';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -21,7 +22,7 @@ class App extends React.Component<Props, State> {
     super(props);
     this.state = {
       code: "btcusdt",
-      visible: false,
+      visible: true, //false
       list: [],
     };
   }
@@ -53,8 +54,22 @@ class App extends React.Component<Props, State> {
     });
   }
 
+  public onClick = () => {
+    const { visible } = this.state;
+    this.setState({ visible: !visible });
+  };
+
+  public onSelected = (item: IApiSymbols) => {
+    const { code } = this.state;
+    if (code !== item.symbol) {
+      this.setState({ code: item.symbol });
+      // this.klineRef && this.klineRef.onChangeSymbol(item);
+    }
+    this.onClick();
+  };
+
   public render() {
-    const { code, list } = this.state;
+    const { code, visible, list } = this.state;
     const symbol = list.find((e) => e.symbol === code);
     const title = symbol
       ? `${symbol["base-currency"].toLocaleUpperCase()}/${symbol[
@@ -64,6 +79,8 @@ class App extends React.Component<Props, State> {
     console.log('list:', list)
     return (
       <div className="App">
+
+        <Drawer anchor={'left'} open={visible} onClose={() => {}}>
           <List dense={true}>
             {list.map((e, i) => {
               return (
@@ -85,12 +102,14 @@ class App extends React.Component<Props, State> {
                     primary={`${e["base-currency"].toLocaleUpperCase()}/${e[
                       "quote-currency"
                     ].toLocaleUpperCase()}`}
-                    onClick={() => {}}
+                    onClick={() => this.onSelected(e)}
                   />
                 </ListItem>
               );
             })}
           </List>
+        </Drawer>
+
         <header className="App-header">
           {code} {title}
           <p>

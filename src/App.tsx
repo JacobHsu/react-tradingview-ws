@@ -1,6 +1,13 @@
 import React from 'react';
 import { apiGet } from "./api";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
 import './App.css';
+
+const icon_url = "https://static.okex.com/cdn/oksupport/asset/currency/icon/";
 
 type Props = {};
 type State = {
@@ -57,6 +64,33 @@ class App extends React.Component<Props, State> {
     console.log('list:', list)
     return (
       <div className="App">
+          <List dense={true}>
+            {list.map((e, i) => {
+              return (
+                <ListItem
+                  key={e.symbol}
+                  button={true}
+                  selected={code === e.symbol}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      alt={`Avatar n°${i + 1}`}
+                      src={`${icon_url}${e["base-currency"]}.png?x-oss-process=image/format,webp`}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    style={{
+                      color: code === e.symbol ? "red" : "inherit",
+                    }}
+                    primary={`${e["base-currency"].toLocaleUpperCase()}/${e[
+                      "quote-currency"
+                    ].toLocaleUpperCase()}`}
+                    onClick={() => {}}
+                  />
+                </ListItem>
+              );
+            })}
+          </List>
         <header className="App-header">
           {code} {title}
           <p>

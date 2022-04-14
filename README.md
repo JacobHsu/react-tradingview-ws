@@ -6,6 +6,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 [Drawer](https://v4.mui.com/components/drawers/)
 
+[react-icons](https://react-icons.github.io/react-icons/icons?name=ai)
+
 ## Available Scripts
 
 In the project directory, you can run:

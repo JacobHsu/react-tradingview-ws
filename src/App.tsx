@@ -1,5 +1,6 @@
 import React from 'react';
 import { apiGet } from "./api";
+import { KLineHeader } from "./components/KLineHeader";
 import Drawer from '@material-ui/core/Drawer';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -22,7 +23,7 @@ class App extends React.Component<Props, State> {
     super(props);
     this.state = {
       code: "btcusdt",
-      visible: true, //false
+      visible: false,
       list: [],
     };
   }
@@ -76,10 +77,10 @@ class App extends React.Component<Props, State> {
           "quote-currency"
         ].toLocaleUpperCase()}`
       : "";
-    console.log('list:', list)
+
     return (
       <div className="App">
-
+        <KLineHeader onClick={this.onClick} title={title} />
         <Drawer anchor={'left'} open={visible} onClose={() => {}}>
           <List dense={true}>
             {list.map((e, i) => {
